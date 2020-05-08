@@ -1,9 +1,9 @@
-pragma solidity 0.5.5;
+pragma solidity 0.5.17;
 
-import 'openzeppelin-solidity/contracts/utils/Address.sol';
-import 'openzeppelin-solidity/contracts/drafts/Counters.sol';
-import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
-import 'openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/utils/Address.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/drafts/Counters.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
 import "./Oraclize.sol";
 
 contract Ownable {
@@ -26,6 +26,10 @@ contract Ownable {
     modifier isAddress(address _address){
         require(_address != address(0), 'Address is not valid');
         _;
+    }
+
+    function getOwner() public view returns(address){
+        return _owner;
     }
 
     //  4) fill out the transferOwnership function
@@ -545,11 +549,12 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -takes in a 'to' address, tokenId, and tokenURI as parameters
 //      -returns a true boolean upon completion of the function
 //      -calls the superclass mint and setTokenURI functions
-contract RealStateERC721Token is ERC721Metadata(
-    "ETH Real Estate Marketplace",
-    "EREM",
-    "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
-) {
+contract RealStateERC721Token is ERC721Metadata {
+    constructor (string memory name,
+                 string memory symbol,
+                 string memory URI)
+                 ERC721Metadata(name, symbol, URI) public {}
+
     function mint(address to, uint256 tokenId)
         public
         whenNotPaused
