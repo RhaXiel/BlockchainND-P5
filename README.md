@@ -10,6 +10,13 @@ Download or clone the repo, then:
 
 # Testing
 
+Versions used:
+
+    Truffle v5.1.24 (core: 5.1.24)
+    Solidity - ^0.4.25 (solc-js)
+    Node v10.7.0
+    Web3.js v1.2.1
+
 Unit tests are available with:
 
     truffle compile
